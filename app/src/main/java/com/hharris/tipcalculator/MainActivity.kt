@@ -2,6 +2,10 @@ package com.hharris.tipcalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.SeekBar
+import android.widget.TextView
+import android.util.Log
 
 /*
 Activity means one screen in android terminology, contains business
@@ -33,11 +37,60 @@ constraint widget with margin
 
 
  */
-// logic
+
+private const val TAG = "MainActivity" // c
 
 class MainActivity : AppCompatActivity() {
+
+    // Lateinit means initialise variable in onCreate method and not the constructor
+
+    private lateinit var etBaseAmount: EditText
+    private lateinit var seekBarTip: SeekBar
+    private lateinit var tvTipPercentLabel: TextView
+    private lateinit var tvTipAmount: TextView
+    private lateinit var tvTotalAmount: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Assign the lateinit variables to the components in UI using their ids
+
+        etBaseAmount = findViewById(R.id.etBaseAmount)
+        seekBarTip = findViewById(R.id.seekBarTip)
+        tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
+        tvTipAmount = findViewById(R.id.tvTipAmount)
+        tvTotalAmount = findViewById(R.id.tvTotalAmount)
+
+        // Add eventListener
+        /*
+            Have to override the setOnSeekBarChangeListener. Using anonymous class allows you to
+            override the functions using an expression, without having to having to create a new
+            class.
+        */
+        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                Log.i(TAG, "onProgressChange $progress")
+                /* Convention for logging is that the TAG is the name of the activity file being
+                debugged */
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
