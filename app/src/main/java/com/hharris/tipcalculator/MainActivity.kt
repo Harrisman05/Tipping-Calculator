@@ -1,5 +1,6 @@
 package com.hharris.tipcalculator
 
+import android.animation.ArgbEvaluator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import android.util.Log
+import androidx.core.content.ContextCompat
 
 /*
 Activity means one screen in android terminology, contains business
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipPercentLabel: TextView
     private lateinit var tvTipAmount: TextView
     private lateinit var tvTotalAmount: TextView
+    private lateinit var tvTipDescription: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +67,11 @@ class MainActivity : AppCompatActivity() {
         tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
         tvTipAmount = findViewById(R.id.tvTipAmount)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
+        tvTipDescription = findViewById(R.id.tvTipDescription)
 
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
+        updateTipDescription(INITIAL_TIP_PERCENT)
 
         // Add eventListener
         /*
@@ -82,6 +87,7 @@ class MainActivity : AppCompatActivity() {
 
                 tvTipPercentLabel.text = "$progress%"
                 computeTipAndTotal()
+                updateTipDescription(progress)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -103,6 +109,29 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    private fun updateTipDescription(tipPercent: Int) {
+
+       val tipDescription = when (tipPercent) {
+           in 0..9 -> "Poor"
+           in 10..14 -> "Acceptable"
+           in 15..19 -> "Good"
+           in 20..24 -> "Great"
+           else -> "Amazing"
+       }
+
+        tvTipDescription.text = tipDescription
+
+        // Update the color based on the tipPercent, using interpolation to
+
+        val color = ArgbEvaluator().evaluate(
+
+            tipPercent.toFloat() / seekBarTip.max,
+            ContextCompat.getColor(this, R.color.colorWorstTip),
+            ContextCompat.getColor(this, R.color.colorBestTip)
+        ) as Int
+        tvTipDescription.setTextColor(color)
     }
 
     private fun computeTipAndTotal() {

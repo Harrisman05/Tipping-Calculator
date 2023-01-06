@@ -1,6 +1,11 @@
 R_DEF: Internal format may change without notice
 local
 color black
+color colorBestTip
+color colorWorstTip
+color darkBlue
+color lightBlue
+color lightGrey
 color purple_200
 color purple_500
 color purple_700
@@ -11,8 +16,10 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 id etBaseAmount
 id seekBarTip
+id textView2
 id tvBaseLabel
 id tvTipAmount
+id tvTipDescription
 id tvTipLabel
 id tvTipPercentLabel
 id tvTotalAmount

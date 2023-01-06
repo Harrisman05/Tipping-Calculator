@@ -1279,6 +1279,9 @@ int color cardview_dark_background 0x7f05002a
 int color cardview_light_background 0x7f05002b
 int color cardview_shadow_end_color 0x7f05002c
 int color cardview_shadow_start_color 0x7f05002d
+int color colorBestTip 0x7f050265
+int color colorWorstTip 0x7f050266
+int color darkBlue 0x7f050262
 int color design_bottom_navigation_shadow_color 0x7f05002e
 int color design_box_stroke_color 0x7f05002f
 int color design_dark_default_color_background 0x7f050030
@@ -1327,6 +1330,8 @@ int color foreground_material_dark 0x7f05005a
 int color foreground_material_light 0x7f05005b
 int color highlighted_text_material_dark 0x7f05005c
 int color highlighted_text_material_light 0x7f05005d
+int color lightBlue 0x7f050263
+int color lightGrey 0x7f050264
 int color m3_appbar_overlay_color 0x7f05005e
 int color m3_assist_chip_icon_tint_color 0x7f05005f
 int color m3_assist_chip_stroke_color 0x7f050060
@@ -3068,6 +3073,7 @@ int id textSpacerNoButtons 0x7f0801a8
 int id textSpacerNoTitle 0x7f0801a9
 int id textStart 0x7f0801aa
 int id textTop 0x7f0801ab
+int id textView2 0x7f0801e4
 int id text_input_end_icon 0x7f0801ac
 int id text_input_error_icon 0x7f0801ad
 int id text_input_start_icon 0x7f0801ae
@@ -3095,6 +3101,7 @@ int id transition_transform 0x7f0801c3
 int id triangle 0x7f0801c4
 int id tvBaseLabel 0x7f0801de
 int id tvTipAmount 0x7f0801df
+int id tvTipDescription 0x7f0801e5
 int id tvTipLabel 0x7f0801e0
 int id tvTipPercentLabel 0x7f0801e1
 int id tvTotalAmount 0x7f0801e2
