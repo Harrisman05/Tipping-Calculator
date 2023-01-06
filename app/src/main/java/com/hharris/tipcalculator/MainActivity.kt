@@ -2,6 +2,8 @@ package com.hharris.tipcalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
@@ -38,7 +40,8 @@ constraint widget with margin
 
  */
 
-private const val TAG = "MainActivity" // c
+private const val TAG = "MainActivity"
+private const val INITIAL_TIP_PERCENT = 15 // constant for inital Tip Percent
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,35 +65,71 @@ class MainActivity : AppCompatActivity() {
         tvTipAmount = findViewById(R.id.tvTipAmount)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
 
+        seekBarTip.progress = INITIAL_TIP_PERCENT
+        tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
+
         // Add eventListener
         /*
             Have to override the setOnSeekBarChangeListener. Using anonymous class allows you to
             override the functions using an expression, without having to having to create a new
             class.
         */
-        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        seekBarTip.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(TAG, "onProgressChange $progress")
                 /* Convention for logging is that the TAG is the name of the activity file being
                 debugged */
+
+                tvTipPercentLabel.text = "$progress%"
+                computeTipAndTotal()
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
 
             override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+
+        // Override always
+
+        etBaseAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                Log.i(TAG, "after text has been changed $s")
+                computeTipAndTotal()
+            }
 
         })
 
-
-
-
-
-
-
-
-
-
-
-
     }
+
+    private fun computeTipAndTotal() {
+
+        // 1) Get value of the base and tip percent
+        // 2) Compute the tip and total
+        // 3) Update UI
+
+        if (etBaseAmount.text.isEmpty()) { // early return from function is the field is empty,
+            // program will crash otherwise, also reset values of tip amount and total amount
+            tvTipAmount.text = ""
+            tvTotalAmount.text = ""
+            return
+        }
+
+        val baseAmount = etBaseAmount.text.toString().toDouble()
+        val tipPercentage = seekBarTip.progress
+
+        Log.i(TAG, "$baseAmount, $tipPercentage")
+
+        val tip = baseAmount * tipPercentage / 100
+        tvTipAmount.text = "%.2f".format(tip)
+
+        val totalAmount = baseAmount + tip
+        tvTotalAmount.text = "%.2f".format(totalAmount)
+    }
+
 }
+
+
